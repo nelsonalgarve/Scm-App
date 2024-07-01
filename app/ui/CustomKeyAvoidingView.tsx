@@ -1,15 +1,17 @@
-import colors from '@utils/colors';
-import { FC } from 'react';
-import { KeyboardAvoidingView, Platform, StyleSheet, Text, View } from 'react-native';
+import { FC, ReactNode } from 'react';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 interface Props {
-	children?: React.ReactNode;
+	children?: ReactNode;
 }
 
 const CustomKeyAvoidingView: FC<Props> = ({ children }) => {
 	return (
-		<KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
-			{children}
+		<KeyboardAvoidingView
+			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+			style={styles.container}
+		>
+			<ScrollView>{children}</ScrollView>
 		</KeyboardAvoidingView>
 	);
 };
@@ -17,9 +19,6 @@ const CustomKeyAvoidingView: FC<Props> = ({ children }) => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
-		justifyContent: 'center',
 	},
 });
 
