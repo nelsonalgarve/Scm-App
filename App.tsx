@@ -1,4 +1,6 @@
+import ForgetPassword from '@views/ForgetPassword';
 import SignIn from '@views/SignIn';
+import SignUp from '@views/SignUp';
 import { Platform, SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 
 export default function App() {

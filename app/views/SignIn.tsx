@@ -1,4 +1,5 @@
 import AppButton from '@ui/AppButton';
+import CustomKeyAvoidingView from '@ui/CustomKeyAvoidingView';
 import FormDivider from '@ui/FormDivider';
 import FormInput from '@ui/FormInput';
 import FormNavigator from '@ui/FormNavigator';
@@ -10,7 +11,7 @@ interface Props {}
 
 const SignIn: FC<Props> = (props) => {
 	return (
-		<KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
+		<CustomKeyAvoidingView>
 			<ScrollView>
 				<View style={styles.innerContainer}>
 					<WelcomeHeader />
@@ -32,7 +33,7 @@ const SignIn: FC<Props> = (props) => {
 					</View>
 				</View>
 			</ScrollView>
-		</KeyboardAvoidingView>
+		</CustomKeyAvoidingView>
 	);
 };
 

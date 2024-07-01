@@ -1,6 +1,5 @@
-import colors from '@utils/colors';
 import React, { FC } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import FormNavigatorItem from './FormNavigatorItem';
 
 interface Props {

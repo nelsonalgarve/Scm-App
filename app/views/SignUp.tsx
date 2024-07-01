@@ -9,18 +9,20 @@ import WelcomeHeader from '../ui/WelcomeHeader';
 
 interface Props {}
 
-const ForgetPassword: FC<Props> = (props) => {
+const SignUp: FC<Props> = (props) => {
 	return (
 		<CustomKeyAvoidingView>
 			<ScrollView>
 				<View style={styles.innerContainer}>
 					<WelcomeHeader />
 					<View style={styles.formContainer}>
+						<FormInput placeholder="Name" />
 						<FormInput placeholder="Email" keyboardType="email-address" autoCapitalize="none" />
-						<AppButton title="Request Link" />
+						<FormInput placeholder="password" secureTextEntry />
+						<AppButton title="Sign Up" />
 						<FormDivider />
 						<FormNavigator
-							leftTitle={'Sign Up'}
+							leftTitle={'Forget Password'}
 							rightTitle={'Sign In'}
 							onLeftPress={function (): void {
 								throw new Error('Function not implemented.');
@@ -48,4 +50,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default ForgetPassword;
+export default SignUp;
