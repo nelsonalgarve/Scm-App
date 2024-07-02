@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet } from 'react-native';
 
 interface Props {
 	children: ReactNode;
@@ -10,6 +10,7 @@ const CustomKeyAvoidingView: FC<Props> = ({ children }) => {
 		<KeyboardAvoidingView
 			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 			style={styles.container}
+			keyboardVerticalOffset={50}
 		>
 			<ScrollView>{children}</ScrollView>
 		</KeyboardAvoidingView>
