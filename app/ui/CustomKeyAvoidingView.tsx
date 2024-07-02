@@ -2,7 +2,7 @@ import { FC, ReactNode } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 interface Props {
-	children?: ReactNode;
+	children: ReactNode;
 }
 
 const CustomKeyAvoidingView: FC<Props> = ({ children }) => {

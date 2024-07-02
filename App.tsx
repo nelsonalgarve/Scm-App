@@ -1,12 +1,10 @@
-import ForgetPassword from '@views/ForgetPassword';
-import SignIn from '@views/SignIn';
-import SignUp from '@views/SignUp';
 import { Platform, SafeAreaView, StatusBar, StyleSheet } from 'react-native';
+import Navigator from './app/navigator';
 
 export default function App() {
 	return (
 		<SafeAreaView style={styles.container}>
-			<SignIn />
+			<Navigator />
 		</SafeAreaView>
 	);
 }

@@ -1,8 +1,10 @@
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import AppButton from '@ui/AppButton';
 import CustomKeyAvoidingView from '@ui/CustomKeyAvoidingView';
 import FormDivider from '@ui/FormDivider';
 import FormInput from '@ui/FormInput';
 import FormNavigator from '@ui/FormNavigator';
+import { AuthStackParamList } from 'app/navigator/AuthNavigator';
 import { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import WelcomeHeader from '../ui/WelcomeHeader';
@@ -10,6 +12,7 @@ import WelcomeHeader from '../ui/WelcomeHeader';
 interface Props {}
 
 const ForgetPassword: FC<Props> = (props) => {
+	const { navigate } = useNavigation<NavigationProp<AuthStackParamList>>();
 	return (
 		<CustomKeyAvoidingView>
 			<View style={styles.innerContainer}>
@@ -21,12 +24,8 @@ const ForgetPassword: FC<Props> = (props) => {
 					<FormNavigator
 						leftTitle={'Sign Up'}
 						rightTitle={'Sign In'}
-						onLeftPress={function (): void {
-							throw new Error('Function not implemented.');
-						}}
-						onRightPress={function (): void {
-							throw new Error('Function not implemented.');
-						}}
+						onLeftPress={() => navigate('SignUp')}
+						onRightPress={() => navigate('SignIn')}
 					/>
 				</View>
 			</View>
