@@ -1,10 +1,12 @@
 import { Platform, SafeAreaView, StatusBar, StyleSheet } from 'react-native';
+import FlashMessage from 'react-native-flash-message';
 import Navigator from './app/navigator';
 
 export default function App() {
 	return (
 		<SafeAreaView style={styles.container}>
 			<Navigator />
+			<FlashMessage position="top" />
 		</SafeAreaView>
 	);
 }

@@ -5,11 +5,12 @@ import FormDivider from '@ui/FormDivider';
 import FormInput from '@ui/FormInput';
 import FormNavigator from '@ui/FormNavigator';
 import { newUserSchema, yupValidate } from '@utils/validator';
+import { runAxiosAsync } from 'app/api/runAxiosAsync';
 import { AuthStackParamList } from 'app/navigator/AuthNavigator';
 import axios from 'axios';
 import { FC, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import * as yup from 'yup';
+import { showMessage } from 'react-native-flash-message';
 import WelcomeHeader from '../ui/WelcomeHeader';
 
 interface Props {}
@@ -25,23 +26,13 @@ const SignUp: FC<Props> = (props) => {
 	};
 
 	const handleSubmit = async () => {
-		try {
-			const { values, error } = await yupValidate(newUserSchema, userInfo);
+		const { values, error } = await yupValidate(newUserSchema, userInfo);
+		if (error) showMessage({ message: error, type: 'danger' });
 
-			if (error) console.log(error);
-
-			if (values) {
-				const { data } = await axios.post('http://localhost:8000/auth/sign-up', values);
-			}
-		} catch (error) {
-			if (error instanceof axios.AxiosError) {
-				const response = error.response;
-				if (response) {
-					console.log('API Error : ', response.data.message);
-				}
-			}
-			console.log('normalError :', (error as any).message);
-		}
+		const res = await runAxiosAsync<{ message: string }>(
+			axios.post('http://localhost:8000/auth/sign-up', values)
+		);
+		console.log(res);
 	};
 
 	return (
