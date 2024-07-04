@@ -4,25 +4,55 @@ import CustomKeyAvoidingView from '@ui/CustomKeyAvoidingView';
 import FormDivider from '@ui/FormDivider';
 import FormInput from '@ui/FormInput';
 import FormNavigator from '@ui/FormNavigator';
+import { signInSchema, yupValidate } from '@utils/validator';
+import { baseUrl } from 'app/api/client';
+import { runAxiosAsync } from 'app/api/runAxiosAsync';
 import { AuthStackParamList } from 'app/navigator/AuthNavigator';
+import axios from 'axios';
 import { FC, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
 import WelcomeHeader from '../ui/WelcomeHeader';
 
 interface Props {}
+
+interface SignInRes {
+	profile: {
+		id: string;
+		email: string;
+		name: string;
+		verified: boolean;
+		avatar?: string;
+	};
+	tokens: {
+		refresh: string;
+		access: string;
+	};
+}
 
 const SignIn: FC<Props> = (props) => {
 	const { navigate } = useNavigation<NavigationProp<AuthStackParamList>>();
 
 	const [userInfo, setUserInfo] = useState({ email: '', password: '' });
+	const [busy, setBusy] = useState(false);
 	const { email, password } = userInfo;
 
 	const handleChange = (name: string) => (value: string) => {
 		setUserInfo({ ...userInfo, [name]: value });
 	};
 
-	const handleSubmit = () => {
-		console.log(userInfo);
+	const handleSubmit = async () => {
+		const { values, error } = await yupValidate(signInSchema, userInfo);
+		if (error) showMessage({ message: error, type: 'danger' });
+		setBusy(true);
+		const res = await runAxiosAsync<SignInRes>(axios.post(`${baseUrl}/auth/sign-in`, values));
+
+		if (res) {
+			// store tokens
+			console.log(res);
+		}
+
+		setBusy(false);
 	};
 
 	return (
@@ -43,7 +73,7 @@ const SignIn: FC<Props> = (props) => {
 						value={password}
 						onChangeText={handleChange('password')}
 					/>
-					<AppButton title="Sign In" onPress={handleSubmit} />
+					<AppButton active={!busy} title="Sign In" onPress={handleSubmit} />
 					<FormDivider />
 					<FormNavigator
 						leftTitle={'Forget Password'}

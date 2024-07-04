@@ -10,7 +10,10 @@ interface Props extends PressableProps {
 
 const AppButton: FC<Props> = ({ title, active = true, onPress }) => {
 	return (
-		<Pressable style={[styles.button, active ? styles.btnActive : styles.btnDeActive]} onPress={onPress}>
+		<Pressable
+			style={[styles.button, active ? styles.btnActive : styles.btnDeActive]}
+			onPress={active ? onPress : null}
+		>
 			<Text style={styles.title}>{title}</Text>
 		</Pressable>
 	);

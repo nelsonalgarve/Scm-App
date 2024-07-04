@@ -5,6 +5,7 @@ import FormDivider from '@ui/FormDivider';
 import FormInput from '@ui/FormInput';
 import FormNavigator from '@ui/FormNavigator';
 import { newUserSchema, yupValidate } from '@utils/validator';
+import { baseUrl } from 'app/api/client';
 import { runAxiosAsync } from 'app/api/runAxiosAsync';
 import { AuthStackParamList } from 'app/navigator/AuthNavigator';
 import axios from 'axios';
@@ -19,6 +20,7 @@ const SignUp: FC<Props> = (props) => {
 	const { navigate } = useNavigation<NavigationProp<AuthStackParamList>>();
 
 	const [userInfo, setUserInfo] = useState({ name: '', email: '', password: '' });
+	const [busy, setBusy] = useState(false);
 	const { name, email, password } = userInfo;
 
 	const handleChange = (name: string) => (value: string) => {
@@ -28,11 +30,11 @@ const SignUp: FC<Props> = (props) => {
 	const handleSubmit = async () => {
 		const { values, error } = await yupValidate(newUserSchema, userInfo);
 		if (error) showMessage({ message: error, type: 'danger' });
+		setBusy(true);
+		const res = await runAxiosAsync<{ message: string }>(axios.post(`${baseUrl}/auth/sign-up`, values));
 
-		const res = await runAxiosAsync<{ message: string }>(
-			axios.post('http://localhost:8000/auth/sign-up', values)
-		);
-		console.log(res);
+		if (res?.message) showMessage({ message: res.message, type: 'success' });
+		setBusy(false);
 	};
 
 	return (
@@ -54,7 +56,7 @@ const SignUp: FC<Props> = (props) => {
 						secureTextEntry
 						onChangeText={handleChange('password')}
 					/>
-					<AppButton title="Sign Up" onPress={handleSubmit} />
+					<AppButton active={!busy} title="Sign Up" onPress={handleSubmit} />
 					<FormDivider />
 					<FormNavigator
 						leftTitle={'Forget Password'}
